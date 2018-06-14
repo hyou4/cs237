@@ -282,7 +282,7 @@ def detect_text(path):
     response = client.text_detection(image=image)
     texts = response.text_annotations
     print('Texts:')
-    print('\n"{}"'.format(texts[0].description))
+    print('\n"{}"'.format(texts[0].description.lower()))
 
     # for text in texts:
     #     print('\n"{}"'.format(text.description))
