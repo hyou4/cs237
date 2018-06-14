@@ -20,7 +20,7 @@ def recvall(sock):
 
 TCP_IP = '0.0.0.0'
 
-TCP_PORT = 8001
+TCP_PORT = 8002
 
 BUFFER_SIZE = 1000000
 
@@ -43,14 +43,15 @@ while 1:
     data = recvall(conn)
     data = str(data)
     # print ("received data:", data)
-    strg=str(data.split(',')[2][: -1])
-    print (len(strg))
+    strg=str(data.split(',')[2])
+    #print (strg)
     result = "" + strg 
     missing_padding = len(result) % 4
-    temp=result[0:-2]
+    temp=result[0:-3]
+    #print(temp)
     if missing_padding != 0:
-         temp += '='* (4 - missing_padding)
-    result=temp+"\n"
+         temp += '='* (4 - missing_padding-2)
+    result=temp+'\\n\n'
 
     # name="/home/pi/CS237/folder1/testfile"+str(count)+".txt"
     # file = open(name,"a") 
@@ -62,7 +63,7 @@ while 1:
     # file.close()
     print (result)
     print (type(result))
-    img_data = base64.b64decode(result)
+    img_data = base64.b64decode((repr(result)))
     imagename="./imageToSave.png"
     with open(imagename, "wb") as fh:
         fh.write(img_data)
